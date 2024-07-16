@@ -38,7 +38,7 @@ const List = styled.div`
   flex-direction: column;
   background-color: #fff;
   gap: 7px;
-  margin-bottom: 30px;
+  margin-top: 30px;
 `
 
 const Profile = styled.div`

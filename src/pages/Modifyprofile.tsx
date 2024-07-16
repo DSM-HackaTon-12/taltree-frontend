@@ -27,7 +27,7 @@ export const ModifyProfilepage = () => {
 const View = styled.div`
   position: relative;
   width: 393px;
-  height: 852px;
+  height: 852px; 
 ` 
 
 const Header = styled.div`
