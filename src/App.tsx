@@ -6,11 +6,13 @@ import { MapPage } from "./pages/Map";
 function App() {
   return (
     <Routes>
-      <Route path="/login" />
+      <Route path='/login' element={<LoginPage/>} />
+      <Route path='/Reviewall' element={<Reviewallpage/>} />
+      <Route path='/Modifyprofile' element={<ModifyProfilepage/>} />
       <Route path="/my" element={<MyPage />} />
       <Route path="/map" element={<MapPage />} />
     </Routes>
-  );
+  ); 
 }
 
 export default App;
