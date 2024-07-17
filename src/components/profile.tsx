@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { color } from "../styles/global";
 import { useEffect, useState } from "react";
-import { GetUser } from "../apis/getMy";
 import axios from "axios";
 import { GetCookie } from "../utils/cookie";
 
