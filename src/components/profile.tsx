@@ -3,6 +3,7 @@ import { color } from "../styles/global";
 import { useEffect, useState } from "react";
 import { GetUser } from "../apis/getMy";
 import axios from "axios";
+import { GetCookie } from "../utils/cookie";
 
 interface ProfileType {
   username: string;
@@ -14,8 +15,7 @@ interface ProfileType {
 const BASEURL = process.env.REACT_APP_BASE_URL;
 
 export const ProfileComponents = () => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InNveWVvbmtpbTAyMjdAbmF2ZXIuY29tIiwiaWF0IjoxNzIxMjAxOTA3LCJleHAiOjE3MjEyMDkxMDd9.z1XGqSRWOwf9bDo76XItuYsxSwllSO9Sq5O8s4ej9qQ";
+  const token = GetCookie("access_token");
   const [profile, setProfile] = useState<ProfileType>();
 
   const uuu = async () => {
@@ -23,14 +23,6 @@ export const ProfileComponents = () => {
       headers: { Authorization: token },
     });
     setProfile(res.data);
-  };
-
-  const handleLogin = async () => {
-    // const res = await axios.post(`${BASEURL}/user/login`, {
-    //   email: "soyeonkim0227@naver.com",
-    //   password: "1234",
-    // });
-    // console.log(res.data);
   };
 
   useEffect(() => {
@@ -42,11 +34,11 @@ export const ProfileComponents = () => {
       <ProfileContainer>
         <ProfileImg src={profile?.profile_url} />
         <div>
+          <Name>{token}</Name>
           <Name>{profile?.username}</Name>
           <Email>{profile?.email}</Email>
         </div>
       </ProfileContainer>
-      <FixBtn onClick={handleLogin}>내정보 수정하기</FixBtn>
     </Wapper>
   );
 };
