@@ -1,20 +1,45 @@
 import styled from "styled-components";
-import { MyDonation } from "../components/common/myDonation";
 import { color } from "../styles/global";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetCookie } from "../utils/cookie";
+import axios from "axios";
+
+const BASEURL = process.env.REACT_APP_BASE_URL;
 
 export const Revierwritepage = () => {
   const [star, setStar] = useState<number>(0);
+  const [content, setContent] = useState<string>("");
   const level = [1, 2, 3, 4, 5];
+  const navigate = useNavigate();
+  const params = useParams();
+  const token = GetCookie("access_token");
+
+  const handleWrite = async () => {
+    try {
+      const res = await axios.post(
+        `${BASEURL}/review/${params.id}`,
+        {
+          content: content,
+          rating: star,
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
+
+      navigate("/review");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <View>
       <Header>
+        <p onClick={() => navigate("/review")}>취소</p>
         <Title>리뷰</Title>
       </Header>
-      <Reviewbox>
-        <MyDonation />
-      </Reviewbox>
       <Stars>
         {level.map((idx) => {
           return idx > star ? (
@@ -35,12 +60,15 @@ export const Revierwritepage = () => {
       <Writereviewcontainer>
         <Writereviewtext>내용</Writereviewtext>
         <Writereview>
-          <Wrriteviewinput placeholder="내용을 작성해 주세요" />
+          <Wrriteviewinput
+            onChange={(e) => setContent(e.target.value)}
+            value={content}
+            placeholder="내용을 작성해 주세요"
+          />
         </Writereview>
       </Writereviewcontainer>
-      <Writereviewbtn>
-        {" "}
-        <Btntext>작성 완료</Btntext>{" "}
+      <Writereviewbtn onClick={handleWrite}>
+        <Btntext>작성 완료</Btntext>
       </Writereviewbtn>
     </View>
   );
@@ -53,9 +81,11 @@ const View = styled.div`
 
 const Header = styled.div`
   width: 393px;
-  height: 70px;
-  margin-top: 70px;
-  padding-left: 20px;
+  margin-top: 40px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 `;
 const Title = styled.p`
   font-size: 30px;
@@ -63,8 +93,9 @@ const Title = styled.p`
 `;
 
 const Reviewbox = styled.div`
-  width: 393px;
-  padding-left: 20px;
+  width: 100%;
+  padding: 0 20px;
+  margin-top: 20px;
 `;
 
 const Stars = styled.div`

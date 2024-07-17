@@ -1,26 +1,80 @@
 import styled from "styled-components";
 import { color } from "../../styles/global";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { GetCookie } from "../../utils/cookie";
 
-export const MyDonation = () => {
+interface DataType {
+  post_id: number;
+  title: string;
+  address: string;
+  start_date: string;
+  end_date: string;
+  image_url: string;
+  re: boolean;
+  my?: boolean;
+  name?: string;
+}
+
+const BASEURL = process.env.REACT_APP_BASE_URL;
+
+export const MyDonation = ({
+  post_id,
+  title,
+  address,
+  start_date,
+  end_date,
+  image_url,
+  re,
+  my,
+  name,
+}: DataType) => {
   const navigate = useNavigate();
+  const token = GetCookie("access_token");
+  const [data, setData] = useState<number>(0);
+
+  const getReview = async () => {
+    try {
+      const res = await axios.get(`${BASEURL}/review/${post_id}`, {
+        headers: { Authorization: "Bearer " + token },
+      });
+
+      if (res.data.reviews.length > 0) {
+        console.log(res.data.reviews.length);
+        setData(res.data.reviews.length);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getReview();
+  }, []);
 
   return (
-    <Wapper onClick={() => navigate(`/reviewall/${1}`)}>
-      <Img src="/img/profile.svg" />
+    <Wapper
+      onClick={() =>
+        data !== 0 && re ? navigate(`/reviewall/${post_id}`) : console.log(123)
+      }
+    >
+      <Img src={image_url} />
       <ContentContainer>
-        <Title>
-          벌레 잘 잡는 달란트를 가지신 분..벌레 잘 잡는 달란트를 가지신 분..벌레
-          잘 잡는 달란트를 가지신 분..벌레 잘 잡는 달란트를 가지신 분..
-        </Title>
-        <Address>대전광역시 유성구 가정동 76</Address>
+        <Title>{title}</Title>
+        <Address>{address}</Address>
         <DateFlex>
-          <Date>2024.07.16 ~ 2024.07.19</Date>
+          <Date>{start_date + " ~ " + end_date}</Date>
           <Review>
-            <ReviewImg src="/img/review.svg" />
-            <ReviewCnt>3</ReviewCnt>
+            {data !== 0 && re && (
+              <>
+                <ReviewImg src="/img/review.svg" />
+                <ReviewCnt>{data}</ReviewCnt>
+              </>
+            )}
           </Review>
         </DateFlex>
+        {my && <Address>{"참여자: " + name}</Address>}
       </ContentContainer>
     </Wapper>
   );
@@ -73,7 +127,7 @@ const DateFlex = styled.div`
 `;
 
 const Date = styled.p`
-  width: 70%;
+  width: 80%;
   min-width: 151px;
   font-size: 14px;
   font-weight: 400;
