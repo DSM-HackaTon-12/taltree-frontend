@@ -5,16 +5,19 @@ import { MapPage } from "./pages/Map";
 import { LoginPage } from "./pages/Login";
 import { Reviewallpage } from "./pages/Reviewall";
 import { ModifyProfilepage } from "./pages/Modifyprofile";
+import { NavermapsProvider } from "react-naver-maps";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/reviewall/:id" element={<Reviewallpage />} />
-      <Route path="/modifyprofile" element={<ModifyProfilepage />} />
-      <Route path="/my" element={<MyPage />} />
-      <Route path="/map" element={<MapPage />} />
-    </Routes>
+    <NavermapsProvider ncpClientId="vgzwlz1i4m">
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/reviewall/:id" element={<Reviewallpage />} />
+        <Route path="/modifyprofile" element={<ModifyProfilepage />} />
+        <Route path="/my" element={<MyPage />} />
+        <Route path="/map" element={<MapPage />} />
+      </Routes>
+    </NavermapsProvider>
   );
 }
 
