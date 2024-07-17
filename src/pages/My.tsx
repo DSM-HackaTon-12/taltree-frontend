@@ -15,8 +15,8 @@ export const MyPage = () => {
       <JoinDonation />
       <LLine />
       <NotificationDonation />
-      <LLine />
-      <Tree />
+      {/* <LLine />
+        <Tree /> */}
     </>
   );
 };

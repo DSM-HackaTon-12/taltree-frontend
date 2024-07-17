@@ -20,7 +20,7 @@ export const ProfileComponents = () => {
 
   const uuu = async () => {
     const res = await axios.get(`${BASEURL}/user/mypage`, {
-      headers: { Authorization: token },
+      headers: { Authorization: "Bearer " + token },
     });
     setProfile(res.data);
   };
@@ -34,7 +34,6 @@ export const ProfileComponents = () => {
       <ProfileContainer>
         <ProfileImg src={profile?.profile_url} />
         <div>
-          <Name>{token}</Name>
           <Name>{profile?.username}</Name>
           <Email>{profile?.email}</Email>
         </div>
