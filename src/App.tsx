@@ -5,6 +5,8 @@ import { MapPage } from "./pages/Map";
 import { LoginPage } from "./pages/Login";
 import { Reviewallpage } from "./pages/Reviewall";
 import { ModifyProfilepage } from "./pages/Modifyprofile";
+import { Reviewpage } from "./pages/Review";
+import { Revierwritepage } from "./pages/Reviewwrite";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Route path="/Modifyprofile" element={<ModifyProfilepage />} />
       <Route path="/my" element={<MyPage />} />
       <Route path="/map" element={<MapPage />} />
+      <Route path="/Review" element={<Reviewpage />} />
+      <Route path="/Reviewwrite" element={<Revierwritepage />} />
     </Routes>
   );
 }
