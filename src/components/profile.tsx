@@ -34,7 +34,6 @@ export const ProfileComponents = () => {
         <ProfileImg src={profile?.profile_url} />
         <div>
           <Name>{profile?.username}</Name>
-          <Name>{BASEURL}</Name>
           <Email>{profile?.email}</Email>
         </div>
       </ProfileContainer>
