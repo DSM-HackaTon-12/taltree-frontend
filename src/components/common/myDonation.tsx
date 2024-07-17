@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { color } from "../../styles/global";
+import { useNavigate } from "react-router-dom";
 
 export const MyDonation = () => {
+  const navigate = useNavigate();
+
   return (
-    <Wapper>
+    <Wapper onClick={() => navigate(`/reviewall/${1}`)}>
       <Img src="/img/profile.svg" />
       <ContentContainer>
         <Title>
